@@ -1,0 +1,7 @@
+git checkout -b branchname
+Different algorithm for handling the merge
+git checkout branchname
+git checkout -d branchname
+
+Conflicts arise when changes are done to master but not commited to branch and then the branch is attempted
+to be merged to master
