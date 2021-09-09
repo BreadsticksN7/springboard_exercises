@@ -16,7 +16,10 @@ let gameBoard = []; // array of rows, each row is array of cells  (board[y][x])
 
 function makeBoard() {
   for (let y = 0; y < boardHeight; y++) {
-    gameBoard.push(Array.from({ length: boardWidth }));  //pulled array.from({}) from solution, not sure I understand how it identified length as an actual length attribute and not as a generic [key] to reference.  (ie title: boardWidth doesn't work but length: does.  how/why?  tried using something like boardWidth.push(...gameBoard), thinking it would [,,,,,,])
+    gameBoard.push(Array.from({ length: boardWidth }));  
+    //pulled array.from({}) from solution, not sure I understand how it identified length as an actual length 
+    //attribute and not as a generic [key] to reference.  (ie title: boardWidth doesn't work but length: does.  
+    //how/why?  tried using something like boardWidth.push(...gameBoard), thinking it would [,,,,,,])
   }
 }
 
