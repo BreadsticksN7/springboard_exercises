@@ -23,7 +23,7 @@ def checkword():
 
     return jsonify({'result': response})
 
-@app.route('/postscore', methods=['POST'])
+@app.route('/postscore', methods=["POST"])
 def postscore():
     score = request.json["score"]
     highscore = session.get("highscore", 0)
