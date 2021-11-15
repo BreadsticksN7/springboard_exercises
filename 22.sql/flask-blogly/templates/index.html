@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<h1>Welcome to Citadel News</h1>
+
+{% for post in posts %}
+
+<h2 class="mt-4">{{post.title}}</h2>
+
+<p>{{post.content}}</p>
+
+<p><small><a href="/user/{{post.user.id}}">{{post.user.full_name}}</a>
+        - {{post.time_stamp}}</small></p>
+
+{% endfor %}
+{% endblock %}
