@@ -13,5 +13,12 @@
 <p><small><a href="/user/{{post.user.id}}">{{post.user.full_name}}</a>
         - {{post.time_stamp}}</small></p>
 
+{% if post.tags %}
+<b>Tags:</b>
+{% for tag in post.tags %}
+<a href="/tags/{{tag.id}}" class="btn btn-primary btn-sm">{{tag.tag_name}}</a>
+{% endfor %}
+{% endif %}
+
 {% endfor %}
 {% endblock %}

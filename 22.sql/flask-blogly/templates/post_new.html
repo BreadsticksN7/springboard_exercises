@@ -7,7 +7,7 @@ Add a new post
 {% block content %}
 
 <h1>Add a post</h1>
-<form>
+<form method="POST">
     <div class="form-group row">
         <label for="post_title" class="col-sm-2 col-form-label">Title</label>
         <div class="col-sm-10">
@@ -20,8 +20,17 @@ Add a new post
         <textarea name="post_content" class="form-control"></textarea>
         </div>
     </div>
-    <button type="submit" formaction="/" formmethod="GET" class="btn btn-secondary btn-sm">Cancel</button>
-    <button type="submit" formmethod="POST" class="btn btn-success btn-sm">Add</button>
+    <div class="form-check">
+        {% for tag in tags %}
+        <div>
+            <input class="form-check-input" type="checkbox" value="{{tag.id}}" id="{{tag.id}}" name="tags">
+            <label class="form-check-label" for="tag_{{tag.id}}">{{tag.tag_name}}</label>
+        </div>
+        {% endfor %}
+    </div>
+
+    <a href="/user/{{user.id}}" type="button" class="btn btn-secondary btn-sm">Cancel</a>
+    <button type="submit" class="btn btn-success btn-sm">Add</button>
 </form>
 
 {% endblock %}

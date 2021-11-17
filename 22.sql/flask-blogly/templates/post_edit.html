@@ -19,7 +19,15 @@ Edit Post
     <textarea name="post_content" class="form-control"}">{{post.content}}</textarea>
     </div>
 </div>
-    <button type="submit" class="btn btn-secondary btn-sm">Cancel</button>
+<div class="form-check">
+    {% for tag in tags %}
+    <div>
+        <input class="form-check-input" type="checkbox" value="{{tag.id}}" id="tag_{{tag.id}}" {% if tag in post.tags %}checked{% endif %} name="tags">
+        <label class="form-check-label" for="tag_{{tag.id}}">{{tag.tag_name}}</label>
+    </div>
+    {% endfor %}
+</div>
+    <a href="/" type="button" class="btn btn-primary btn-sm">Front Page</a>
     <button type="submit" class="btn btn-success btn-sm">Save</button>
 
 </form>
