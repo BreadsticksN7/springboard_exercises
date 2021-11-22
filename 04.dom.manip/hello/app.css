@@ -1,0 +1,12 @@
+body {
+    background-color: black;
+}
+
+h2 {
+    font-size: 60px;
+    font-family: Montserrat;
+}
+
+.letter {
+    transition: color 2000ms;
+}

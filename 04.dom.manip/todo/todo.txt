@@ -1,0 +1,47 @@
+const todoForm = document.querySelector('#todoForm');
+const todoList = document.querySelector('#todoList');
+let todoItem = document.querySelector('#todoItem');
+
+// Pull from storage
+const savedList = JSON.parse(localStorage.getItem('todo')) || [];
+for (let i = 0; i < savedList.length; i++)
+{
+let newTodo = document.createElement('li');
+newTodo.innerText = savedList[i].task;
+todoList.appendChild(newTodo);
+
+}
+
+// Add Item
+todoForm.addEventListener('submit', function(e){
+    e.preventDefault();
+    let newTodo = document.createElement('li');
+    let newItem = document.querySelector('#todoItem').value;
+    newTodo.innerText = newItem;
+    todoForm.reset();
+    todoList.appendChild(newTodo);
+
+// Clear Form Field on submit and storage  
+
+    savedList.push({ task: newTodo.innertext, isCompleted: false });
+    localStorage.setItem('todo', JSON.stringify(savedList));
+
+});
+
+
+
+// Add Remove Button
+    // let removeItem = document.createElement('button');
+    // removeItem.innerText = "Remove";
+    // newTodo.append(removeItem);
+
+// Strike through item or remove item
+// todoList.addEventListener('click', function(e){
+//     if (e.target.tagName === 'BUTTON'){
+//         e.target.parentElement.remove();
+//     }
+//     else if (e.target.tagName === 'LI'){
+//         e.target.style.textDecoration = 'line-through';
+//     }  
+ 
+// });

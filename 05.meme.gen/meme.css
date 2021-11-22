@@ -1,0 +1,84 @@
+body {
+    background-color: white;
+    margin: 0;
+}
+
+.formtop {
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+    border: 0;
+    background-color: lightblue;
+}
+
+.topDiv {
+    display: flex;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+.container {
+    position: relative;
+    z-index: 1;
+    width: 30%;
+    padding: 0;
+    margin: 0;
+    text-align: center;
+}
+
+.memeImg {
+    z-index: 2;
+    width: 100%;
+}
+
+.txttop {
+    position: absolute;
+    top: 1rem;
+    left: 50%;
+    z-index: 3;
+    text-align: center;
+}
+
+.txtbottom {
+    position: absolute;
+    bottom: 1rem;
+    left: 50%;
+    z-index: 4;
+    text-align: center;
+}
+
+/* Overlay and hover provided by
+https://www.w3schools.com/howto/tryit.asp?filename=tryhow_css_image_overlay_fade
+*/
+.overlay {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    opacity: 0;
+    transition: .5s ease;
+    background-color: #008CBA;
+    z-index: 5;
+  }
+  
+  .container:hover .overlay {
+    opacity: 0.8;
+  }
+  
+  .text {
+    color: white;
+    font-size: 20px;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    -webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    z-index: 6;
+  }
