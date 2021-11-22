@@ -1,0 +1,7 @@
+const PI = 3.14;
+
+Var can be reassigned and used outside blockscopes.  Let can not be redeclared and can be isolated to blockscopes.  Const can not be reassigned or redeclared and can be isolated to blockscopes.
+
+Let can be reassigned, const can not.
+
+Hoisting is how variables are loaded onto a page before their contents are made available, so if called they appear to be undefined.
