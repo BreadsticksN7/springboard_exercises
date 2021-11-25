@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Springboard - Cupcakes</title>
+  <link rel="stylesheet" href="{{url_for('static', filename='cupcake.css')}}">
+</head>
+
+<body>
+<div class="container">
+<h1 class="text-center display-3">Cupcake List</h1>
+<ul id="cupcakes-list">
+</ul>
+
+<h3>Add a new cupcake</h3>
+<form id="new-cupcake">
+    <div>
+        <label for="form-flavor">Flavor:</label>
+        <input id="form-flavor" name="flavor">
+    </div>
+    <div>
+        <label for="form-size">Size:</label>
+        <input id="form-size" name="size">
+    </div>
+    <div>
+        <label for="form-rating">Rating:</label>
+        <input id="form-rating" name="rating" type="number">
+    </div>
+    <div>
+        <label for="form-image">Image:</label>
+        <input id="form-image" name="image">
+    </div>
+<button>Add Cupcake!</button>
+</form>
+</div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"
+    integrity="sha256-T/f7Sju1ZfNNfBh7skWn0idlCBcI3RwdLSS4/I7NQKQ=" crossorigin="anonymous"></script>
+  <script
+    src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+    crossorigin="anonymous"></script>
+  <script src="/static/cupcake.js"></script>
+</body>
+
+</html>
