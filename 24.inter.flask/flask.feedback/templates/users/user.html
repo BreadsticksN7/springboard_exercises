@@ -1,0 +1,28 @@
+{% extends 'base.html' %}
+
+{% block title %}{{ users.username }} Profile{% endblock%}
+
+{% block content %}
+<h1>User: {{ users.username }}</h1>
+
+<div class="container">
+<div>First Name: {{ users.first_name }}</div>
+<div>Last Name: {{ users.last_name }}</div>
+<div>Email: {{ users.email }}</div>
+</div>
+
+<form method="POST" action="/users/{{ users.username }}/delete">
+    <button>Delete</button>
+</form>
+
+<h2>User FeedBack:</h2>
+<form action="/users/{{ users.username }}/feedback/add">
+    <button>Add Feedback</button>
+</form> 
+<ul>
+    {% for feed in feedback %}
+    <li><a href="/feedback/{{ feed.id }}/update">{{ feed.title }}</a></li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}Springboard - Flask Feedback{% endblock %}
+
+{% block content %}
+<h1>Welcome - Front Page</h1>
+
+<div>
+    {% for feed in feedback %}
+    <div>
+        {{ feed.title }} - {{ feed.users.username }}
+    </div>
+    {% endfor %}
+</div>
+{% endblock %}
