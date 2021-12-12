@@ -1,10 +1,10 @@
 import os
 
-from flask import Flask, render_template, request, flash, redirect, session, g
+from flask import Flask, render_template, request, flash, redirect, session, g, abort
 from flask_debugtoolbar import DebugToolbarExtension
 from sqlalchemy.exc import IntegrityError
 
-from forms import UserAddForm, LoginForm, MessageForm
+from forms import UserAddForm, LoginForm, MessageForm, UserEditForm
 from models import db, connect_db, User, Message
 
 CURR_USER_KEY = "curr_user"
@@ -152,7 +152,8 @@ def users_show(user_id):
                 .order_by(Message.timestamp.desc())
                 .limit(100)
                 .all())
-    return render_template('users/show.html', user=user, messages=messages)
+    likes = [message.id for message in user.likes]
+    return render_template('users/show.html', user=user, messages=messages, likes=likes)
 
 
 @app.route('/users/<int:user_id>/following')
@@ -209,11 +210,64 @@ def stop_following(follow_id):
     return redirect(f"/users/{g.user.id}/following")
 
 
+# Like routes
+
+@app.route('/users/<int:user_id>/likes', methods=['GET'])
+def show_likes(user_id):
+    """Display page of liked messages"""
+    if not g.user:
+        flash('Access unauthorized.', 'danger')
+        return redirect('/')
+
+    user = User.query.get_or_404(user_id)
+    return render_template('/users/likes.html', user=user, likes=user.likes)
+
+
+@app.route('/messages/<int:message_id>/like', methods=['POST'])
+def add_like(message_id):
+    """Like/Unlike a message"""
+    if not g.user:
+        flash('Access unauthorized.', 'danger')
+        return redirect('/')
+
+    message = Message.query.get_or_404(message_id)
+    if message.user.id == g.user.id:
+        return abort(403)
+    
+    user_likes = g.user.likes
+
+    if message in user_likes:
+        g.user.likes = [like for like in user_likes if like != message]
+    else:
+        g.user.likes.append(message)
+    db.session.commit()
+
+    return redirect('/')
+
+
 @app.route('/users/profile', methods=["GET", "POST"])
 def profile():
     """Update profile for current user."""
+    if not g.user:
+        flash("Error", "danger")
+        return redirect('/')
 
-    # IMPLEMENT THIS
+    user= g.user
+    form = UserEditForm(obj=user)
+
+    if form.validate_on_submit():
+        if User.authenticate(user.username, form.password.data):
+            user.username=form.username.data,
+            user.email=form.email.data,
+            user.image_url=form.image_url.data,
+            user.header_image_url=form.header_image_url.data,
+            user.bio=form.bio.data
+
+            db.session.commit()
+            return redirect(f'/users/{user.id}')
+        flash ('Wrong password', 'danger')
+    return render_template('/users/edit.html', form=form, user=user)
+        
 
 
 @app.route('/users/delete', methods=["POST"])
@@ -294,16 +348,23 @@ def homepage():
     """
 
     if g.user:
+        following_ids = [f.id for f in g.user.following] + [g.user.id]
         messages = (Message
                     .query
+                    .filter(Message.user_id.in_(following_ids))
                     .order_by(Message.timestamp.desc())
                     .limit(100)
                     .all())
 
-        return render_template('home.html', messages=messages)
+        liked_msg = [msg.id for msg in g.user.likes]
+        return render_template('home.html', messages=messages, likes=liked_msg)
 
     else:
         return render_template('home-anon.html')
+
+@app.errorhandler(404)
+def page_not_found(e):
+    return render_template('404.html'), 404
 
 
 ##############################################################################
