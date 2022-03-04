@@ -9,6 +9,10 @@ app.use(express.json());
 const compRoutes = require('./routes/companies');
 app.use('/companies', compRoutes);
 
+// Invoice routes
+const invRoutes = require('./routes/invoices');
+app.use('/invoices', invRoutes);
+
 // 404
 app.use(function (req, res, next){
   const err = new ExpressError('Not found', 404);
