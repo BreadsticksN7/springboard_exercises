@@ -13,6 +13,10 @@ app.use('/companies', compRoutes);
 const invRoutes = require('./routes/invoices');
 app.use('/invoices', invRoutes);
 
+// Industry routes
+const indRoutes = require('./routes/industries');
+app.use('/industries', indRoutes)
+
 // 404
 app.use(function (req, res, next){
   const err = new ExpressError('Not found', 404);

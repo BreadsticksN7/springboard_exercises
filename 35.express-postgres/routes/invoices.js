@@ -14,10 +14,16 @@ router.get('/', async(req, res, next) => {
 
 router.get('/:id', async(req, res, next) => {
   try {
-    const results = await db.query(`SELECT id, comp_code, amt, paid, add_date, paid_date, companies.name, companies.description FROM invoices INNER JOIN companies ON invoices.comp_code = companies.code WHERE id = $1`, [req.params.id]);
+    const results = await db.query(
+      `SELECT id, comp_code, amt, paid, add_date, paid_date, companies.name, companies.description 
+      FROM invoices 
+      INNER JOIN companies ON invoices.comp_code = companies.code 
+      WHERE id = $1`, 
+      [req.params.id]);
     if (results.rows.length === 0){
         throw new ExpressError(`Invoice not found: '${req.params.id}'`, 404)
     }
+    
     const data = results.rows[0];
     const invoice = {
         id: data.id,
@@ -35,7 +41,11 @@ router.get('/:id', async(req, res, next) => {
 
 router.post('/', async(req, res, next) => {
   try {
-    const results = await db.query(`INSERT INTO invoices (comp_code, amt) VALUES ($1, $2) RETURNING id, comp_code, amt, paid, add_date, paid_date`, [req.body.comp_code, req.body.amt]);
+    const results = await db.query(
+      `INSERT INTO invoices (comp_code, amt) 
+      VALUES ($1, $2) 
+      RETURNING id, comp_code, amt, paid, add_date, paid_date`, 
+      [req.body.comp_code, req.body.amt]);
     return res.status(201).json({ invoice: results.rows[0] })
   } catch(e) {
     return next(e);
@@ -44,10 +54,35 @@ router.post('/', async(req, res, next) => {
 
 router.put('/:id', async(req, res, next) => {
   try {
-    const results = await db.query(`UPDATE invoices SET amt = $2 WHERE id = $1 RETURNING id, comp_code, amt, paid, add_date, paid_date`, [req.params.id, req.body.amt]);
-    if (results.rows.length === 0){
-      throw new ExpressError(`Invoice can't be found`, 404);
+    const paidRes = await db.query(
+      `SELECT paid
+      FROM invoices
+      WHERE id = $1`,
+      [req.params.id]);
+    
+      if (paidRes.rows.length === 0){
+      throw new ExpressError(`Invoice can't be found.`, 404);
     }
+
+    let paidDate = null
+    let { amt, paid } = req.body;
+    const currPaidDate = paidRes.rows[0].paid_date;
+    
+    if (!currPaidDate && paid){
+      paidDate = new Date();
+    } else if (!paid) {
+      paidDate = null
+    } else {
+      paidDate = currPaidDate;
+    }
+
+    const results = await db.query(
+      `UPDATE invoices 
+      SET amt = $2, paid = $3, paid_date = $4 
+      WHERE id = $1 
+      RETURNING id, comp_code, amt, paid, add_date, paid_date`, 
+      [req.params.id, amt, paid, paidDate]);
+
     return res.json({ invoice: results.rows[0]});
   } catch(e) {
   return next(e)
@@ -56,7 +91,12 @@ router.put('/:id', async(req, res, next) => {
 
 router.delete('/:id', async(req, res, next) => {
   try {
-    const results = await db.query(`DELETE FROM invoices WHERE id = $1 RETURNING id`, [req.params.id]);
+    const results = await db.query(
+      `DELETE FROM invoices 
+      WHERE id = $1 
+      RETURNING id`, 
+      [req.params.id]);
+
     if (results.rows.length === 0){
       throw new ExpressError(`No invoice with ID of: '${req.params.id}'`, 404);
     }
