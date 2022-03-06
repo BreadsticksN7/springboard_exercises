@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block content %}
+
+<form action="/{{ reservation.id }}/reservation/" method="POST">
+    <h1>Edit Reservation</h1>
+  
+    <div class="form-group">
+      <label for="start">Current Start: {{ reservation.getResTime()}}</label>
+        <input id="start"
+               class="form-control"
+               name="startAt"
+               value="{{ reservation.getResTime() }} ">
+    </div>
+    <div class="form-group">
+      <label for="num-guests"># of Guests:</label>
+          <input id="num-guests"
+                 class="form-control"
+                 name="numGuests"
+                 value="{{ reservation.numGuests }}">
+    </div>
+    <div class="form-group">
+      <label for="notes">Notes:</label>
+        <input id="notes"
+               class="form-control"
+               name="notes"
+               value="{{ reservation.notes }}">
+    </div>
+
+    <button class="btn btn-primary">Save</button>
+    <a href="/{{ reservation.customerId }}/" class="btn btn-danger">Cancel</a>
+  </form>
+
+
+{% endblock %}
