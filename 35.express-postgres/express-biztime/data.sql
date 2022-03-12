@@ -54,3 +54,4 @@ INSERT INTO company_industry (industry_code, company_code)
   VALUES ('tech', 'apple'),
          ('tech', 'ibm'),
          ('retail', 'amazon');
+         
