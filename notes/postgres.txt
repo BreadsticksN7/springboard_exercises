@@ -1,0 +1,18 @@
+--Postgresql--
+sudo service postgresql start
+sudo -u postgres createuser -s $(whoami); createdb $(whoami)
+
+createdb my_db_name - create db 
+dropdb my_db_name - delete db
+psql my_db_name to access
+psql < file.sql to push 'start' data
+
+pg_dump -C -c -O my_db_name > backup.sql -- backup file
+
+C - create - INSERT INTO
+R - read - SELECT ... FROM
+U - update - UPDATE ... SET
+D - delete - DELETE FROM
+
+\x auto-- expanded reading
+

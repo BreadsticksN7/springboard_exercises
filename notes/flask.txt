@@ -1,0 +1,18 @@
+Flask -----
+FLASK_APP=app.py flask run
+FLASK_ENV=development flask run
+export FLASK_ENV=development .bash_profile
+
+from flask import Flask, request, render_template, redirect, flash, jsonify
+app = Flask(__name__)
+app.config['SECRET_KEY'] = "oh-so-secret"
+
+from flask_debugtoolbar import DebugToolbarExtension
+debug = DebugToolbarExtension(app)
+
+
+
+@app.route("/"):
+def funcname():
+    stuff
+    return stuff

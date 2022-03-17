@@ -1,0 +1,32 @@
+CLI install WSL - curl https://cli-assets.heroku.com/install-ubuntu.sh | sh
+
+Heroku -- gunicorn (after brew is installed)
+(venv) $ pip install gunicorn
+echo "web: gunicorn app:app" > Procfile
+echo "python-3.7.2" > runtime.txt
+
+heroku login
+heroku create NAME_OF_APP
+git remote -v  #should see heroku
+git push heroku master  #add/commit
+heroku open
+
+heroku logs --tail
+------
+heroku config:set SECRET_KEY=nevertell FLASK_ENV=production
+heroku config    # see all your environment variables
+import os
+
+# use secret key in production or default to our dev one
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'shh')
+------
+heroku addons:create heroku-postgresql:hobby-dev
+heroku config   # you should see DATABASE_URL
+import os
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get(
+    'DATABASE_URL', 'postgresql:///flask-heroku')
+-----
+heroku pg:psql  #connect to psql
+heroku pg:psql < file.sql   #run sql file
+heroku run python seed.py  

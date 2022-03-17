@@ -1,0 +1,62 @@
+npm init
+npm i node
+npm i --global nodemon
+
+Route example: 
+app.get('/routename:fname', (req, res) => {
+    return res.send('Blah blah blah ${req.params.fname}');
+});
+
+Debugging:
+node --inspect-brk filename.js
+
+Testing:
+npm i --save-dev supertest
+
+Parse bodies for json or form data(goes near top):
+app.use(express.json());
+app.use(express.urlendcoded({ extended: true }));
+
+Nodemon:
+npm i -g nodemon (global install)
+nodemon -e js,html,css (listens for changes on associated files)
+
+
+Boiler plate:
+const express = require('express');
+const ExpressError = require('./expressError') // Create a JS file
+
+const app = express();
+// If no other route matches, respond with a 404
+app.use((req, res, next) => {
+  const e = new ExpressError("Page Not Found", 404)
+  next(e)
+})
+
+// Error handler
+app.use(function (err, req, res, next) { //Note the 4 parameters!
+  // the default status is 500 Internal Server Error
+  let status = err.status || 500;
+  let message = err.msg;
+
+  // set the status and alert the user
+  return res.status(status).json({
+    error: { message, status }
+  });
+});
+
+app.listen(3000, () => {
+  console.log("Server running on port 3000")
+});
+
+// Create a JS file
+class ExpressError extends Error {
+  constructor(msg, status) {
+    super();
+    this.msg = msg;
+    this.status = status;
+    console.error(this.stack)
+  }
+}
+
+module.exports = ExpressError;

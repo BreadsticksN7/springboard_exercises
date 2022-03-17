@@ -1,0 +1,31 @@
+Primative Types: Number - String - Boolean(True/False values) - Null - Undefined
+Unary operator:  ++ / --
+Logical operators:  && (and) - || (or) - ! (not)
+Ternary operators: condition ? expIfTrue: expifFalse
+    example: num === 7 ? console.log("lucky!") : console.log("Bad");
+             let color = status === 'offline' ? 'red' : 'green';
+
+string.indexOf(arg) = locates arg index location (index char starts at 0 as the first char)
+string.slice(arg) = starts/isolates at the index arg
+string.replace(arg) = replaces arg values
+
+Escape Notation: 
+    \n - newline
+    \' - single quote
+    \" - double quote
+    \\ - backslash
+
+Array Methods:
+    Push - add to end
+    Pop - remove from end
+    Shift - remove from start
+    Unshift - add to start 
+
+
+method.addEventListener('x', function(e){})
+event.preventDefault() // stop form from refreshing page or other elements from using their default action
+
+Create virtual dir for pip installs:
+python3 -m venv venv
+source venv/bin/activate
+pip install {appname}
