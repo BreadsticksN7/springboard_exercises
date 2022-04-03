@@ -1,0 +1,33 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema",
+    "$id": "http://example.com/example.json",
+    "type": "object",
+    "required": [],
+    "properties": {
+        "title": {
+            "type": "string",
+            "examples": [
+                "test"
+            ]
+        },
+        "salary": {
+            "type": "integer",
+            "examples": [
+                1000
+            ]
+        },
+        "equity": {
+            "type": "integer",
+            "examples": [
+                0
+            ]
+        },
+        "company_handle": {
+            "type": "string",
+            "examples": [
+                "garner-michael"
+            ]
+        }
+    },
+    "additionalProperties": false
+}

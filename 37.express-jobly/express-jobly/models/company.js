@@ -47,17 +47,42 @@ class Company {
   /** Find all companies.
    *
    * Returns [{ handle, name, description, numEmployees, logoUrl }, ...]
+   * Queries can filter out specific companies based on provided values
    * */
 
-  static async findAll() {
-    const companiesRes = await db.query(
+  static async findAll(searchFilters = {}) {
+    let query = 
           `SELECT handle,
                   name,
                   description,
                   num_employees AS "numEmployees",
                   logo_url AS "logoUrl"
-           FROM companies
-           ORDER BY name`);
+           FROM companies`;
+
+    let whereExpression = [];
+    let queryValues = [];
+    const { minEmployees, maxEmployees, name } = searchFilters;
+
+    if(minEmployees > maxEmployees){
+      throw new BadRequestError(`Min employees can't be larger than Max`);
+    }
+    if(minEmployees !== undefined){
+      queryValues.push(minEmployees);
+      whereExpression.push(`num_employees >= $${queryValues.length}`);
+    }
+    if(maxEmployees !== undefined){
+      queryValues.push(maxEmployees);
+      whereExpression.push(`num_employees <= $${queryValues.length}`);
+    }
+    if(name){
+      queryValues.push(`%${name}%`);
+      whereExpression.push(`name ILIKE $${queryValues.length}`);
+    }
+    if(whereExpression.length > 0){
+      query += " WHERE " + whereExpression.join(" AND ");
+    }
+    query += " ORDER BY name";
+    const companiesRes = await db.query(query, queryValues);
     return companiesRes.rows;
   }
 
@@ -83,6 +108,19 @@ class Company {
     const company = companyRes.rows[0];
 
     if (!company) throw new NotFoundError(`No company: ${handle}`);
+    
+    /**Retrieves job tables to attach to a company */
+    const jobsRes = await db.query(
+      `SELECT id,
+              title,
+              salary,
+              equity
+      FROM jobs
+      WHERE company_handle = $1
+      ORDER BY id`,
+      [handle]
+    );
+    company.jobs = jobsRes.rows;
 
     return company;
   }

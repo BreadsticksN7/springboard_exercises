@@ -139,6 +139,16 @@ class User {
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
 
+    /**Finds job information to attach to user */
+    const jobsRes = await db.query(
+      `SELECT job_id AS "jobId"
+       FROM applications
+       WHERE username = $1`,
+       [username]
+    );
+
+    user.jobs = jobsRes.rows;
+
     return user;
   }
 
@@ -203,6 +213,40 @@ class User {
     const user = result.rows[0];
 
     if (!user) throw new NotFoundError(`No user: ${username}`);
+  }
+
+  /** Apply to a job with provided (username, jobId)
+   * Throws NotFoundErrors when either username or jobId isn't found
+   * Inserts into db
+   * Returns { applied: jobId }
+   */
+
+  static async apply(username, jobId) {
+    const checkJob = await db.query(
+      `SELECT id
+       FROM jobs
+       WHERE id = $1`,
+       [jobId]
+    );
+    const jobRes = checkJob.rows[0];
+    if(!jobRes) throw new NotFoundError(`Job not found: ${jobId}`);
+
+    const checkUser = await db.query(
+      `SELECT username
+       FROM users
+       WHERE username = $1`,
+       [username]
+    );
+    const userRes = checkUser.rows[0];
+    if(!userRes) throw new NotFoundError(`Username doesn't exist: ${username}`);
+
+    const applyJob = await db.query(
+      `INSERT INTO applications
+       (job_id, username)
+       VALUES ($1, $2)`,
+       [jobId, username]
+    );
+    return applyJob.rows;
   }
 }
 
