@@ -228,8 +228,8 @@ class User {
        WHERE id = $1`,
        [jobId]
     );
-    const jobRes = checkJob.rows[0];
-    if(!jobRes) throw new NotFoundError(`Job not found: ${jobId}`);
+    //const jobRes = checkJob.rows[0];
+    //if (!jobRes) throw new NotFoundError(`Job not found: ${jobId}`);
 
     const checkUser = await db.query(
       `SELECT username
@@ -238,7 +238,7 @@ class User {
        [username]
     );
     const userRes = checkUser.rows[0];
-    if(!userRes) throw new NotFoundError(`Username doesn't exist: ${username}`);
+    if (!userRes) throw new NotFoundError(`Username doesn't exist: ${username}`);
 
     const applyJob = await db.query(
       `INSERT INTO applications

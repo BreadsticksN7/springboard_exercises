@@ -61,7 +61,6 @@ class Job {
       RETURNING title, salary, equity, company_handle`,
       [title, salary, equity, company_handle]
     );
-    console.log(results);
     const jobs = results.rows[0];
     return jobs;
   }
@@ -77,7 +76,7 @@ class Job {
                 title,
                 salary,
                 equity,
-                company_handle AS "companyHandle"
+                company_handle
         FROM jobs
         WHERE id = $1`,
         [id]
