@@ -1,10 +1,12 @@
-import './App.css';
-import BoxNewForm from './BoxNewForm';
+import React from 'react';
+import Boxlist from './BoxList';
+import TodoList from './TodoList';
 
 function App() {
   return (
-    <div className="App">
-      <BoxNewForm />
+    <div>
+      <Boxlist />
+      <TodoList />
     </div>
   );
 }
