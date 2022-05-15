@@ -1,10 +1,33 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from './Box';
+import BoxNewForm from './BoxNewForm';
 
-function Boxlist({ width, height, color}) {
+function Boxlist() {
+  const [ boxes, setBoxes ] = useState([]);
+  const add = boxObj => {
+    setBoxes(boxes => [...boxes, boxObj]);
+  };
+  const remove = id => {
+    setBoxes(boxes => boxes.filter(box => box.id !== id));
+  };
+
+  const boxProps = boxes.map(box => (
+    <Box 
+      key={box.id}
+      id={box.id}
+      handleRemove={remove}
+      width={box.width}
+      height={box.height}
+      backgroundColor={box.backgroundColor}
+    />
+  ));
+  
   return (
-    <Box width="10" height="20" color="purple" />
-  )
+    <div>
+      <BoxNewForm createBox={add} />
+      {boxProps}
+    </div>
+  );
 }
 
 export default Boxlist;

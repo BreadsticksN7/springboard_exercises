@@ -1,9 +1,20 @@
 import React from 'react';
 
-function Box({ width, height, color}) {
+function Box({ id, handleRemove, width, height, backgroundColor}) {
+  const remove = () => handleRemove(id);
+  const divStyle = {
+    width: {width}+'em',
+    height: {height}+'em',
+    backgroundColor
+  };
+
   return (
-    <div width={width} height={height} background-color={color}>Tacos!</div>
-  )
+    <div 
+      className="box-color" 
+      style={{ divStyle }}>
+      <button onClick={remove}>X</button>
+    </div>
+  );
 }
 
 export default Box;

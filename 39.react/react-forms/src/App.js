@@ -1,10 +1,10 @@
 import './App.css';
-import Boxlist from './BoxList';
+import BoxNewForm from './BoxNewForm';
 
 function App() {
   return (
     <div className="App">
-      <Boxlist />
+      <BoxNewForm />
     </div>
   );
 }
