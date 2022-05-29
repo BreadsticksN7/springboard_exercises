@@ -13,3 +13,8 @@
   background-color: tomato;
   color: white;
 }
+
+.JokeList-getmore:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}

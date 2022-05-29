@@ -1,5 +1,10 @@
 .Joke {
   margin-bottom: 0.75em;
+  padding: 0.2em;
+}
+
+.Joke-locked {
+  background-color: #ccc;
 }
 
 .Joke-votearea {
