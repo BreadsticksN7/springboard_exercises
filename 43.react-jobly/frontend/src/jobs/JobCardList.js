@@ -5,7 +5,7 @@ import JobCard from './JobCard';
 //Used on JobList / CompanyList
 function JobCardList({jobs}) {
   return (
-    <div>
+    <div className='JobCardList'>
       {jobs.map(job => (
         <JobCard
           key={job.id}

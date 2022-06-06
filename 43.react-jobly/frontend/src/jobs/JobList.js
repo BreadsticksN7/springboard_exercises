@@ -21,11 +21,11 @@ function JobList() {
   if (!jobs) return <LoadingSpinner />
 
   return (
-    <div>
+    <div className='JobList col-md-8 offset-md-2'>
       <FilterForm filterBy={search} />
         {jobs.length
           ? <JobCardList jobs={jobs} />
-          : <p>Sorry, no results found</p>
+          : <p className='lead'>Sorry, no results found</p>
         }
     </div>
   );
