@@ -1,0 +1,5 @@
+.FilterForm input:focus {
+    box-shadow: none;
+    border-color: #ced4da;
+  }
+  
