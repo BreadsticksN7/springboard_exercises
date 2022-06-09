@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import JoblyApi from '../api/api';
+import Alert from '../Components/Alert';
 
 function LoginForm({login}) {
   const navigate = useNavigate();
@@ -8,6 +8,7 @@ function LoginForm({login}) {
     username: "",
     password: ""
   });
+  const [formErrors, setFormErrors] = useState([]);
 
   async function handleSubmit(evt) {
     evt.preventDefault();
@@ -15,7 +16,7 @@ function LoginForm({login}) {
     if(res.success) {
       navigate("/companies");
     } else {
-      return navigate("/login");
+      setFormErrors(res.errors);
     }
   }
   const handleChange = evt => {
@@ -51,8 +52,13 @@ function LoginForm({login}) {
                   required
                 />
               </div>
+
+              {formErrors.length
+                ? <Alert type="danger" messages={formErrors} />
+                : null }
+
               <button
-                className='btn btn-primary float-right'>Submit</button>
+                className='btn btn-primary float-right' >Submit</button>
             </form>
           </div>
         </div>

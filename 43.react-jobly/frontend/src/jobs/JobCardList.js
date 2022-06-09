@@ -3,9 +3,9 @@ import JobCard from './JobCard';
 
 //Displays specific job details
 //Used on JobList / CompanyList
-function JobCardList({jobs}) {
+function JobCardList({jobs, apply}) {
   return (
-    <div className='JobCardList'>
+    <div>
       {jobs.map(job => (
         <JobCard
           key={job.id}

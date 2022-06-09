@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Alert from '../Components/Alert';
 
 function SignUpForm({ signup }) {
   const navigate = useNavigate();
@@ -10,6 +11,7 @@ function SignUpForm({ signup }) {
     lastName: "",
     email: ""
   });
+  const [formErrors, setFormErrors] = useState([]);
 
   async function handleSubmit(evt) {
     evt.preventDefault();
@@ -17,7 +19,7 @@ function SignUpForm({ signup }) {
     if (res.success) {
       navigate("/companies");
     } else {
-      navigate("/signup");
+      setFormErrors(res.errors);
     }
   }
 
@@ -76,6 +78,12 @@ function SignUpForm({ signup }) {
                     onChange={handleChange}
                   />
                 </div>
+
+                {formErrors.length
+                 ? <Alert type="danger" messages={formErrors}/>
+                 : null 
+                }
+
                 <button
                   type="submit"
                   className='btn btn-primary float-right'
