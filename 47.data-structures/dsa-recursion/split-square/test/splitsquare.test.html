@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SplitSquare JS Test</title>
+
+    <link href="http://unpkg.com/mocha/mocha.css" rel="stylesheet"/>
+    <script src="http://unpkg.com/chai/chai.js"></script>
+    <script src="http://unpkg.com/mocha/mocha.js"></script>
+</head>
+
+<body>
+
+<div id="mocha"></div>
+<script>
+    mocha.setup("tdd");
+</script>
+
+<script src="../splitsquare.js"></script>
+<script src="splitsquare.test.js"></script>
+
+<script>
+    var assert = chai.assert;
+    mocha.run()
+</script>
+
+</body>
+</html>
