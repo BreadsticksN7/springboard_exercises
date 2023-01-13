@@ -1,0 +1,8 @@
+getting-started = change to project name
+
+Creating image
+docker build -t getting-started .(note the period)
+
+Running image
+docker run -p 3000:3000 -d getting-started
+
